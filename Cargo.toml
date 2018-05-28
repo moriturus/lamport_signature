@@ -1,6 +1,6 @@
 [package]
 name = "lamport_signature"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Henrique Sasaki Yuya <moriturus@alimensir.com>"]
 license = "MIT"
 description = "A Rust implementation of the Lamport one-time signature scheme."
