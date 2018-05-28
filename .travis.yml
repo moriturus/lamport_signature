@@ -1,0 +1,10 @@
+language: rust
+rust:
+    - nightly
+fast_finish: true
+cache: cargo
+script:
+    - cargo build --verbose --all
+    - cargo test --verbose --all
+    - cargo bench --verbose --all
+    - cargo doc --verbose --no-deps
