@@ -118,7 +118,7 @@ impl Signature {
         Ok(Signature::new(data))
     }
 
-    /// A linearized signature data.
+    /// Converts the inner signature data into a linearized vector.
     pub fn to_bytes(&self) -> Vec<u8> {
         self.data.clone().into_iter().flatten().collect()
     }
