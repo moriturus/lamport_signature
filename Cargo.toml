@@ -1,7 +1,13 @@
 [package]
 name = "lamport_signature"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Henrique Sasaki Yuya <moriturus@alimensir.com>"]
+license = "MIT"
+description = "A Rust implementation of the Lamport one-time signature scheme."
+repository = "https://github.com/moriturus/lamport_signature"
+readme = "README.md"
+keywords = ["lamport", "signature"]
+documentation = "https://docs.rs/lamport_signature"
 
 [dependencies]
 rand = "0.5.0"
