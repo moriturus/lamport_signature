@@ -1,5 +1,9 @@
 # `lamport_signature`
 
+[![Crates.io](https://img.shields.io/crates/v/lamport_signature.svg)](https://crates.io/crates/lamport_signature)
+[![docs.rs](https://docs.rs/lamport_signature/badge.svg)](https://docs.rs/lamport_signature)
+[![GitHub license](https://img.shields.io/github/license/moriturus/lamport_signature.svg)](https://github.com/moriturus/lamport_signature/blob/master/LICENSE)
+
 *lamport_signature* is a Rust implementation of the [Lamport one-time signature scheme](https://en.wikipedia.org/wiki/Lamport_signature).
 
 ## Difference from the [lamport_sigs](https://github.com/SpinResearch/lamport_sigs.rs) crate
@@ -7,6 +11,10 @@
 - *lamport_signature* is strongly influenced by the *lamport_sigs* crate but **NO CODES ARE SHARED OR COPIED**.
 - *lamport_signature* can use arbitrary fixed output size digest algorithm implemented in [RustCrypto/hashes](https://github.com/RustCrypto/hashes).
 - *lamport_signature* can use arbitrary RNG (*Random Number Generator*) implemented in [rust-lang-nursery/rand](https://github.com/rust-lang-nursery/rand).
+
+## Documentation
+
+Documentation is [available](https://docs.rs/lamport_signature).
 
 ## Usage
 
