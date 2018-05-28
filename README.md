@@ -2,6 +2,7 @@
 
 [![Crates.io](https://img.shields.io/crates/v/lamport_signature.svg)](https://crates.io/crates/lamport_signature)
 [![docs.rs](https://docs.rs/lamport_signature/badge.svg)](https://docs.rs/lamport_signature)
+[![Build Status](https://travis-ci.org/moriturus/lamport_signature.svg?branch=master)](https://travis-ci.org/moriturus/lamport_signature)
 [![GitHub license](https://img.shields.io/github/license/moriturus/lamport_signature.svg)](https://github.com/moriturus/lamport_signature/blob/master/LICENSE)
 
 *lamport_signature* is a Rust implementation of the [Lamport one-time signature scheme](https://en.wikipedia.org/wiki/Lamport_signature).
