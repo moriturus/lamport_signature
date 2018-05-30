@@ -349,16 +349,6 @@ impl<T> PrivateKey<T> {
     pub fn used(&self) -> bool {
         self.used
     }
-
-    #[cfg(test)]
-    pub fn zero_values(&self) -> &[Vec<u8>] {
-        &self.zero_values
-    }
-
-    #[cfg(test)]
-    pub fn one_values(&self) -> &[Vec<u8>] {
-        &self.one_values
-    }
 }
 
 impl<T> PrivateKey<T>
@@ -545,7 +535,7 @@ mod tests {
         let chacha_private_key = PrivateKey::<Sha3_256>::new(&mut chacha_rng);
 
         assert!(
-            chacha_private_key.zero_values()[0]
+            chacha_private_key.zero_values[0]
                 == &[
                     177, 105, 126, 159, 198, 70, 30, 25, 131, 209, 49, 207, 105, 105, 28, 161, 167,
                     163, 252, 19, 79, 20, 152, 128, 232, 187, 43, 93, 35, 101, 225, 3
@@ -556,7 +546,7 @@ mod tests {
         let xor_shift_private_key = PrivateKey::<Sha3_256>::new(&mut xor_shift_rng);
 
         assert!(
-            xor_shift_private_key.zero_values()[0]
+            xor_shift_private_key.zero_values[0]
                 == &[
                     7, 21, 0, 12, 172, 13, 7, 60, 103, 19, 8, 104, 13, 7, 31, 0, 36, 130, 187, 12,
                     114, 132, 213, 8, 36, 61, 110, 32, 75, 113, 177, 216
@@ -570,10 +560,10 @@ mod tests {
         let private_key = PrivateKey::<Sha3_256>::new(&mut rng);
 
         assert!(!private_key.used());
-        assert!(private_key.zero_values().len() == 256);
-        assert!(private_key.zero_values().iter().all(|i| i.len() == 32));
-        assert!(private_key.one_values().len() == 256);
-        assert!(private_key.one_values().iter().all(|i| i.len() == 32));
+        assert!(private_key.zero_values.len() == 256);
+        assert!(private_key.zero_values.iter().all(|i| i.len() == 32));
+        assert!(private_key.one_values.len() == 256);
+        assert!(private_key.one_values.iter().all(|i| i.len() == 32));
     }
 
     #[test]
@@ -582,10 +572,10 @@ mod tests {
         let private_key = PrivateKey::<Sha3_512>::new(&mut rng);
 
         assert!(!private_key.used());
-        assert!(private_key.zero_values().len() == 512);
-        assert!(private_key.zero_values().iter().all(|i| i.len() == 64));
-        assert!(private_key.one_values().len() == 512);
-        assert!(private_key.one_values().iter().all(|i| i.len() == 64));
+        assert!(private_key.zero_values.len() == 512);
+        assert!(private_key.zero_values.iter().all(|i| i.len() == 64));
+        assert!(private_key.one_values.len() == 512);
+        assert!(private_key.one_values.iter().all(|i| i.len() == 64));
     }
 
     #[test]

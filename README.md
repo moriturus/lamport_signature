@@ -15,7 +15,7 @@
 
 ## Documentation
 
-Documentation is [available](https://docs.rs/lamport_signature).
+Documentation is [available here](https://docs.rs/lamport_signature).
 
 ## Usage
 
