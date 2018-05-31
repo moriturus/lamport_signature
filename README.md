@@ -9,7 +9,6 @@
 
 ## Difference from the [lamport_sigs](https://github.com/SpinResearch/lamport_sigs.rs) crate
 
-- *lamport_signature* is strongly influenced by the *lamport_sigs* crate but **NO CODES ARE SHARED OR COPIED**.
 - *lamport_signature* can use arbitrary fixed output size digest algorithm implemented in [RustCrypto/hashes](https://github.com/RustCrypto/hashes).
 - *lamport_signature* can use arbitrary RNG (*Random Number Generator*) implemented in [rust-lang-nursery/rand](https://github.com/rust-lang-nursery/rand).
 
