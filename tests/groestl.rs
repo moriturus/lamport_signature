@@ -4,6 +4,9 @@ extern crate groestl;
 extern crate lamport_signature;
 extern crate rand;
 extern crate test;
+#[macro_use]
+extern crate log;
+extern crate env_logger;
 
 use groestl::{Groestl256, Groestl512};
 use lamport_signature::PrivateKey;
@@ -13,12 +16,15 @@ use rand::OsRng;
 fn test_sign_then_verify_groestl_256_private_key() {
     const DATA: &'static [u8] = b"hello, world!";
 
+    let _ = env_logger::try_init();
+
     let mut rng = OsRng::new().unwrap();
     let mut private_key = PrivateKey::<Groestl256>::new(&mut rng);
     let public_key = private_key.public_key();
 
     let signature = private_key.sign(DATA);
 
+    debug!("signature: {:?}", signature);
     assert!(signature.is_ok());
 
     let signature = signature.unwrap();
@@ -29,12 +35,15 @@ fn test_sign_then_verify_groestl_256_private_key() {
 fn test_sign_then_verify_groestl_512_private_key() {
     const DATA: &'static [u8] = b"hello, world!";
 
+    let _ = env_logger::try_init();
+
     let mut rng = OsRng::new().unwrap();
     let mut private_key = PrivateKey::<Groestl512>::new(&mut rng);
     let public_key = private_key.public_key();
 
     let signature = private_key.sign(DATA);
 
+    debug!("signature: {:?}", signature);
     assert!(signature.is_ok());
 
     let signature = signature.unwrap();

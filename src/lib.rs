@@ -55,6 +55,8 @@
 extern crate digest;
 extern crate rand;
 extern crate typenum;
+#[macro_use]
+extern crate log;
 
 #[cfg(test)]
 extern crate sha3;
@@ -107,12 +109,14 @@ impl Signature {
         let digest_size_in_bytes = T::OutputSize::to_usize();
         let digest_size_in_bits = digest_size_in_bytes * 8;
         let required_size_in_bytes = digest_size_in_bytes * digest_size_in_bits;
+        debug!(
+            "required size: {} bytes ({} bits)",
+            required_size_in_bytes,
+            required_size_in_bytes * 8
+        );
         let mut buffer = vec![0u8; required_size_in_bytes];
 
-        match bytes.read_exact(&mut buffer) {
-            Ok(_) => {}
-            Err(reason) => return Err(reason),
-        };
+        bytes.read_exact(&mut buffer)?;
 
         let data = unflatten_random_numbers::<T>(&mut buffer);
         Ok(Signature::new(data))
@@ -201,16 +205,18 @@ where
     {
         let digest_size_in_bytes = T::OutputSize::to_usize();
         let digest_size_in_bits = digest_size_in_bytes * 8;
-        let buffer_size_in_bytes = digest_size_in_bytes * digest_size_in_bits * 2;
-        let mut buffer = vec![0u8; buffer_size_in_bytes];
+        let required_size_in_bytes = digest_size_in_bytes * digest_size_in_bits * 2;
+        debug!(
+            "required size: {} bytes ({} bits)",
+            required_size_in_bytes,
+            required_size_in_bytes * 8
+        );
+        let mut buffer = vec![0u8; required_size_in_bytes];
 
-        match bytes.read_exact(&mut buffer) {
-            Ok(_) => {}
-            Err(reason) => return Err(reason),
-        };
+        bytes.read_exact(&mut buffer)?;
 
         let mut zero_values_merged = buffer;
-        let one_values_merged = zero_values_merged.split_off(buffer_size_in_bytes / 2);
+        let one_values_merged = zero_values_merged.split_off(required_size_in_bytes / 2);
 
         let zero_values = unflatten_random_numbers::<T>(&zero_values_merged);
         let one_values = unflatten_random_numbers::<T>(&one_values_merged);
@@ -500,6 +506,7 @@ fn zeroing(vec: &mut Vec<Vec<u8>>) {
 
 #[cfg(test)]
 mod tests {
+    extern crate env_logger;
     use super::{generate_keys, PrivateKey, PublicKey, Signature};
     use rand::OsRng;
     use sha3::{Sha3_256, Sha3_512};
@@ -508,6 +515,8 @@ mod tests {
 
     #[test]
     fn test_public_key_conversion() {
+        let _ = env_logger::try_init();
+
         let mut rng = OsRng::new().unwrap();
         let (_, original_public_key) = generate_keys::<Sha3_256, _>(&mut rng);
 
@@ -530,6 +539,8 @@ mod tests {
             25, 26, 27, 28, 29, 30, 31, 32,
         ];
         const XOR_SHIFT_SEED: [u8; 16] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+
+        let _ = env_logger::try_init();
 
         let mut chacha_rng = ChaChaRng::from_seed(CHACHA_SEED);
         let chacha_private_key = PrivateKey::<Sha3_256>::new(&mut chacha_rng);
@@ -556,6 +567,8 @@ mod tests {
 
     #[test]
     fn test_generate_sha3_256_private_key() {
+        let _ = env_logger::try_init();
+
         let mut rng = OsRng::new().unwrap();
         let private_key = PrivateKey::<Sha3_256>::new(&mut rng);
 
@@ -568,6 +581,8 @@ mod tests {
 
     #[test]
     fn test_generate_sha3_512_private_key() {
+        let _ = env_logger::try_init();
+
         let mut rng = OsRng::new().unwrap();
         let private_key = PrivateKey::<Sha3_512>::new(&mut rng);
 
@@ -580,6 +595,8 @@ mod tests {
 
     #[test]
     fn test_sha3_256_xor_shift_rng_public_key_from_bytes_then_verify() {
+        let _ = env_logger::try_init();
+
         let mut key_file = File::open("test_key.pub").expect("could not open test_key.pub file.");
         let public_key =
             PublicKey::<Sha3_256>::from_bytes(&mut key_file).expect("could not read from the file");
@@ -597,6 +614,8 @@ mod tests {
         use rand::{SeedableRng, XorShiftRng};
 
         const SEED: [u8; 16] = [0; 16];
+
+        let _ = env_logger::try_init();
 
         let mut rng = XorShiftRng::from_seed(SEED);
         let (_, public_key) = generate_keys::<Sha3_256, _>(&mut rng);

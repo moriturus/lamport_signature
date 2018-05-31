@@ -4,6 +4,9 @@ extern crate lamport_signature;
 extern crate rand;
 extern crate sha3;
 extern crate test;
+#[macro_use]
+extern crate log;
+extern crate env_logger;
 
 use lamport_signature::PrivateKey;
 use rand::OsRng;
@@ -13,12 +16,15 @@ use sha3::{Sha3_256, Sha3_512};
 fn test_sign_then_verify_sha3_256_private_key() {
     const DATA: &'static [u8] = b"hello, world!";
 
+    let _ = env_logger::try_init();
+
     let mut rng = OsRng::new().unwrap();
     let mut private_key = PrivateKey::<Sha3_256>::new(&mut rng);
     let public_key = private_key.public_key();
 
     let signature = private_key.sign(DATA);
 
+    debug!("signature: {:?}", signature);
     assert!(signature.is_ok());
 
     let signature = signature.unwrap();
@@ -29,12 +35,15 @@ fn test_sign_then_verify_sha3_256_private_key() {
 fn test_sign_then_verify_sha3_512_private_key() {
     const DATA: &'static [u8] = b"hello, world!";
 
+    let _ = env_logger::try_init();
+
     let mut rng = OsRng::new().unwrap();
     let mut private_key = PrivateKey::<Sha3_512>::new(&mut rng);
     let public_key = private_key.public_key();
 
     let signature = private_key.sign(DATA);
 
+    debug!("signature: {:?}", signature);
     assert!(signature.is_ok());
 
     let signature = signature.unwrap();
